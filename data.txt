@@ -1,0 +1,172 @@
+Create a project that is described below with full functionality and code : 
+
+- First of all make a project setup with vue js 3 + vite, VeeValidation, Pinia for state management, Tailwind CSS.
+
+- After that create a JSON file and store the data in the pinia store with the data County, State, and City like:
+
+{
+  "counties": [
+    {
+      "name": "India",
+      "states": [
+        {
+          "name": "Gujarat",
+          "cities": [
+            {
+              "name": "Ahmedabad"
+            },
+            {
+              "name": "Surat"
+            },
+            {
+              "name": "Vadodara"
+            }
+          ]
+        },
+        {
+          "name": "Maharastra",
+          "cities": [
+            {
+              "name": "Mumbai"
+            },
+            {
+              "name": "Pune"
+            },
+            {
+              "name": "Nagpur"
+            }
+          ]
+        },
+        {
+          "name": "Rajasthan",
+          "cities": [
+            {
+              "name": "Jaipur"
+            },
+            {
+              "name": "Udaipur"
+            },
+            {
+              "name": "Jodhpur"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "USA",
+      "states": [
+        {
+          "name": "California",
+          "cities": [
+            {
+              "name": "Los Angeles"
+            },
+            {
+              "name": "San Francisco"
+            },
+            {
+              "name": "San Diego"
+            }
+          ]
+        },
+        {
+          "name": "Texas",
+          "cities": [
+            {
+              "name": "Houston"
+            },
+            {
+              "name": "Dallas"
+            },
+            {
+              "name": "Austin"
+            }
+          ]
+        },
+        {
+          "name": "New York",
+          "cities": [
+            {
+              "name": "New York City"
+            },
+            {
+              "name": "Buffalo"
+            },
+            {
+              "name": "Rochester"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Canada",
+      "states": [
+        {
+          "name": "Ontario",
+          "cities": [
+            {
+              "name": "Toronto"
+            },
+            {
+              "name": "Ottawa"
+            },
+            {
+              "name": "Hamilton"
+            }
+          ]
+        },
+        {
+          "name": "Quebec",
+          "cities": [
+            {
+              "name": "Toronto"
+            },
+            {
+              "name": "Ottawa"
+            },
+            {
+              "name": "Hamilton"
+            }
+          ]
+        },
+        {
+          "name": "British Columbia",
+          "cities": [
+            {
+              "name": "Vancouver"
+            },
+            {
+              "name": "Victoria"
+            },
+            {
+              "name": "Kelowna"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+- After that, Create a form with fields that are described below using vue js 3 <script setup></script> + vite and the full validation using VeeValidation and cool design using Tailwind CSS: 
+
+1) Name with validation using VeeValidation
+2) Email with email validation using VeeValidation
+3) Gender using radio button with validation using VeeValidation
+4) Mobile number with mobile validation using VeeValidation
+5) Country that is defined in the store in JSON file using dropdown with validation using VeeValidation
+6) Depending on the County make a dropdown States data that are stored in the JSON file with validation using VeeValidation
+7) Depending on the State make a dropdown City data that is stored in the JSON file with validation using VeeValidation
+8) Pincode with pincode validation using VeeValidation
+9) Description 
+10) Submit button
+
+- After the submission data will be stored bottom of the form with the table form.
+
+- Add the actions button like delete and edit in the store data table
+
+- When I click on that Delete button, that particular row will be deleted
+
+- When I click on that Edit button, that particular row of data will be added to the form and we can edit it, after edit we can submit that data and it will be stored again in the table

@@ -1,0 +1,145 @@
+{
+  "counties": [
+    {
+      "name": "India",
+      "states": [
+        {
+          "name": "Gujarat",
+          "cities": [
+            {
+              "name": "Ahmedabad"
+            },
+            {
+              "name": "Surat"
+            },
+            {
+              "name": "Vadodara"
+            }
+          ]
+        },
+        {
+          "name": "Maharastra",
+          "cities": [
+            {
+              "name": "Mumbai"
+            },
+            {
+              "name": "Pune"
+            },
+            {
+              "name": "Nagpur"
+            }
+          ]
+        },
+        {
+          "name": "Rajasthan",
+          "cities": [
+            {
+              "name": "Jaipur"
+            },
+            {
+              "name": "Udaipur"
+            },
+            {
+              "name": "Jodhpur"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "USA",
+      "states": [
+        {
+          "name": "California",
+          "cities": [
+            {
+              "name": "Los Angeles"
+            },
+            {
+              "name": "San Francisco"
+            },
+            {
+              "name": "San Diego"
+            }
+          ]
+        },
+        {
+          "name": "Texas",
+          "cities": [
+            {
+              "name": "Houston"
+            },
+            {
+              "name": "Dallas"
+            },
+            {
+              "name": "Austin"
+            }
+          ]
+        },
+        {
+          "name": "New York",
+          "cities": [
+            {
+              "name": "New York City"
+            },
+            {
+              "name": "Buffalo"
+            },
+            {
+              "name": "Rochester"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Canada",
+      "states": [
+        {
+          "name": "Ontario",
+          "cities": [
+            {
+              "name": "Toronto"
+            },
+            {
+              "name": "Ottawa"
+            },
+            {
+              "name": "Hamilton"
+            }
+          ]
+        },
+        {
+          "name": "Quebec",
+          "cities": [
+            {
+              "name": "Toronto"
+            },
+            {
+              "name": "Ottawa"
+            },
+            {
+              "name": "Hamilton"
+            }
+          ]
+        },
+        {
+          "name": "British Columbia",
+          "cities": [
+            {
+              "name": "Vancouver"
+            },
+            {
+              "name": "Victoria"
+            },
+            {
+              "name": "Kelowna"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
