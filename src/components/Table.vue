@@ -46,15 +46,13 @@ const tableHead = [
   "State",
   "City",
   "Pincode",
+  "Description",
   "Actions",
 ];
 const items = store.getTableDetails;
-console.log(store.getTableDetails);
 watch(
   () => store.getTableDetails,
-  (data) => {
-    console.log(`Data is: ${data}`);
-  }
+  (data) => {}
 );
 
 const deleteItem = (index) => {

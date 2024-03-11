@@ -1,75 +1,103 @@
 <template>
   <h1 class="font-bold py-3 text-xl underline">Details</h1>
-  <Form @submit="handleSubmit" class="flex flex-col justify-center">
+  <Form
+    @submit="handleSubmit"
+    v-slot="{ errors }"
+    class="flex flex-col justify-center"
+  >
     <!-- Name -->
     <div>
       <label class="font-bold" for="">Name: </label>
-      <input
+      <Field
+        name="Name"
         v-model="name"
-        type="text"
         placeholder="Enter Name"
+        rules="required"
         class="border border-black px-2 my-2"
       />
     </div>
-    <span class="text-red-600 pl-14">{{ errors.name }}</span>
+    <ErrorMessage name="Name" class="text-red-600 pl-14" />
 
     <!-- Email -->
     <div>
       <label class="font-bold" for="">Email: </label>
-      <input
+      <Field
+        name="Email"
         v-model="email"
         type="email"
         placeholder="Enter Email"
+        :rules="validateEmail"
         class="border border-black px-2 my-2"
       />
     </div>
-    <span class="text-red-600 pl-14">{{ errors.email }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="Email" />
 
     <!-- Gender -->
     <div class="my-2">
       <label class="font-bold" for="">Gender: </label>
-      <label> <input v-model="gender" type="radio" value="Male" /> Male </label>
-      <label>
-        <input v-model="gender" type="radio" value="Female" /> Female
-      </label>
+      <Field
+        v-model="gender"
+        name="Gender"
+        type="radio"
+        value="Male"
+        rules="required"
+      />
+      Male
+
+      <Field
+        v-model="gender"
+        name="Gender"
+        type="radio"
+        value="Female"
+        rules="required"
+      />
+      Female
     </div>
-    <span class="text-red-600 pl-14">{{ errors.gender }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="Gender" />
 
     <!-- Mobile Number -->
     <div>
       <label class="font-bold" for="">Mobile: </label>
-      <input
+      <Field
         v-model="mobile"
         type="tel"
         class="border border-black my-2 px-2"
         placeholder="Enter Mobile"
+        :rules="validateMobile"
+        name="Mobile"
       />
     </div>
-    <span class="text-red-600 pl-14">{{ errors.mobile }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="Mobile" />
 
     <!-- Country -->
     <div>
-      <label class="font-bold" for="">Country: </label>
-      <select
+      <label class="font-bold">Country: </label>
+      <Field
+        name="Country"
+        as="select"
         v-model="selectedCountry"
         @change="handleStateChange"
         class="border border-black px-2 my-2"
+        rules="required"
       >
         <option value="">Select Country</option>
         <option v-for="country in countries" :key="country" :value="country">
           {{ country }}
         </option>
-      </select>
+      </Field>
     </div>
-    <span class="text-red-600 pl-14">{{ errors.selectedCountry }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="Country" />
 
     <!-- State -->
     <div>
       <label class="font-bold" for="">State: </label>
-      <select
+      <Field
+        name="State"
+        as="select"
         v-model="selectedState"
         @change="getCities"
         class="border border-black px-2 my-2"
+        rules="required"
       >
         <option value="">Select State</option>
         <option
@@ -79,33 +107,42 @@
         >
           {{ state.name }}
         </option>
-      </select>
+      </Field>
     </div>
-    <span class="text-red-600 pl-14">{{ errors.selectedState }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="State" />
 
     <!-- City -->
     <div>
       <label class="font-bold" for="">City: </label>
-      <select v-model="selectedCity" class="border border-black px-2 my-2">
+      <Field
+        name="City"
+        as="select"
+        v-model="selectedCity.name"
+        class="border border-black px-2 my-2"
+        rules="required"
+      >
         <option value="">Select City</option>
         <option v-for="(city, i) in cities.cities" :key="i" :value="city">
           {{ city.name }}
         </option>
-      </select>
+      </Field>
     </div>
-    <span class="text-red-600 pl-14">{{ errors.selectedCity }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="City" />
 
     <!-- Pincode -->
     <div>
       <label class="font-bold" for="">Pincode: </label>
-      <input
+      <Field
         v-model="pincode"
         type="number"
         placeholder="Pincode"
+        name="pincode"
         class="border border-black px-2 my-2"
+        :rules="{ pincode: true }"
       />
     </div>
-    <span class="text-red-600 pl-14">{{ errors.pincode }}</span>
+    <ErrorMessage class="text-red-600 pl-14" name="pincode" />
+    <!-- <span class="text-red-600 pl-14">{{ errors.pincode }}</span> -->
 
     <!-- Description -->
     <div>
@@ -129,7 +166,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useLocationStore } from "../store";
-import { Form, Field, ErrorMessage } from "vee-validate";
 
 const store = useLocationStore();
 
@@ -182,12 +218,10 @@ const getCities = () => {
   cities.value = states.value.states.find(
     (county) => county.name == selectedState.value
   );
-  console.log(cities.value);
 };
 
-const handleSubmit = () => {
+const handleSubmit = (data, { resetForm }) => {
   const isValid = validateForm();
-  console.log("=======>");
   if (isValid) {
     const data = {
       name: name.value,
@@ -200,7 +234,6 @@ const handleSubmit = () => {
       pincode: pincode.value,
       description: description.value,
     };
-    console.log("data", data);
     store.addData(data);
     resetForm();
     refreshDetails();
@@ -212,22 +245,22 @@ const refreshDetails = () => {};
 const validateForm = () => {
   let isValid = true;
 
-  if (!name.value) {
-    errors.value.name = "Name is required";
-    isValid = false;
-  } else {
-    errors.value.name = "";
-  }
+  // if (!name.value) {
+  //   errors.value.name = "Name is required";
+  //   isValid = false;
+  // } else {
+  //   errors.value.name = "";
+  // }
 
-  if (!email.value) {
-    errors.value.email = "Email is required";
-    isValid = false;
-  } else if (!/^\S+@\S+\.\S+$/.test(email.value)) {
-    errors.value.email = "Email is invalid";
-    isValid = false;
-  } else {
-    errors.value.email = "";
-  }
+  // if (!email.value) {
+  //   errors.value.email = "Email is required";
+  //   isValid = false;
+  // } else if (!/^\S+@\S+\.\S+$/.test(email.value)) {
+  //   errors.value.email = "Email is invalid";
+  //   isValid = false;
+  // } else {
+  //   errors.value.email = "";
+  // }
 
   if (!gender.value) {
     errors.value.gender = "Gender is required";
@@ -277,6 +310,31 @@ const validateForm = () => {
   }
 
   return isValid;
+};
+
+const validateEmail = (value) => {
+  if (!value) {
+    return "This field is required";
+  }
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  if (!regex.test(value)) {
+    return "This field must be a valid email";
+  }
+  return true;
+};
+
+const validateMobile = (value) => {
+  if (!value) {
+    return "Mobile is required";
+  }
+
+  const regex = /^\d{10}$/;
+
+  if (!regex.test(value)) {
+    return "Please enter a valid 10-digit mobile number";
+  }
+
+  return true;
 };
 
 const resetForm = () => {

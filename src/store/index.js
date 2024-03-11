@@ -6,7 +6,6 @@ export const useLocationStore = defineStore("location", {
   }),
   getters: {
     getTableDetails(state) {
-      console.log("Inside Getter");
       return state.data;
     },
   },
@@ -22,7 +21,6 @@ export const useLocationStore = defineStore("location", {
       }
     },
     addData(entry) {
-      console.log("Inside AddData", entry);
       this.data.push(entry);
     },
     deleteData(index) {
