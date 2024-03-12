@@ -177,15 +177,15 @@ import { useLocationStore } from "../store";
 
 const store = useLocationStore();
 
-const name = ref("");
-const email = ref("");
-const gender = ref("");
-const mobile = ref("");
-const selectedCountry = ref("");
-const selectedState = ref("");
-const selectedCity = ref("");
-const pincode = ref("");
-const description = ref("");
+const name = ref("Vidhi Suthar");
+const email = ref("vidhi@gmail.com");
+const gender = ref("fe");
+const mobile = ref("1234567890");
+const selectedCountry = ref("India");
+const selectedState = ref("Gujarat");
+const selectedCity = ref("Ahmedabad");
+const pincode = ref("123456");
+const description = ref("asdfghjkl");
 
 // Define refs for dynamic dropdown options
 const countries = ref([]);

@@ -70,33 +70,13 @@
               @click="editItem(index)"
               class="rounded-full bg-blue-950 text-white p-2 my-1 font-bold text-md"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M3 21V3h10.925l-2 2H5v14h14v-6.95l2-2V21zm18.025-9H12zM9 15v-4.25L19.625.125L23.8 4.4L13.25 15zM21.025 4.4l-1.4-1.4zM11 13h1.4l5.8-5.8l-.7-.7l-.725-.7L11 11.575zm6.5-6.5l-.725-.7zl.7.7z"
-                ></path>
-              </svg>
+              <EditIcon />
             </button>
             <button
               @click="deleteItem(index)"
               class="rounded-full bg-blue-950 text-white p-2 ml-2 my-1 font-bold text-md"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M5 21V6H4V4h5V3h6v1h5v2h-1v15zm2-2h10V6H7zm2-2h2V8H9zm4 0h2V8h-2zM7 6v13z"
-                />
-              </svg>
+              <IconDelete />
             </button>
           </div>
         </td>
