@@ -1,6 +1,5 @@
-<!-- src/App.vue -->
 <template>
-  <div>
+  <div class="container mx-auto">
     <Form />
     <Table />
   </div>
@@ -10,7 +9,3 @@
 import Form from "./components/Form.vue";
 import Table from "./components/Table.vue";
 </script>
-
-<style>
-/* Tailwind CSS classes for styling */
-</style>
