@@ -12,19 +12,35 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in items" :key="index">
-        <td>{{ item.name }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.gender }}</td>
-        <td>{{ item.mobile }}</td>
-        <td>{{ item.country }}</td>
-        <td>{{ item.state }}</td>
-        <td>{{ item.city.name }}</td>
-        <td>{{ item.pincode }}</td>
-        <td>{{ item.description }}</td>
+      <tr
+        v-for="(item, index) in items"
+        :key="index"
+        class="border-black border px-2 text-center"
+      >
+        <td class="border-black border px-2">{{ item.name }}</td>
+        <td class="border-black border px-2">{{ item.email }}</td>
+        <td class="border-black border px-2">{{ item.gender }}</td>
+        <td class="border-black border px-2">{{ item.mobile }}</td>
+        <td class="border-black border px-2">{{ item.country }}</td>
+        <td class="border-black border px-2">{{ item.state }}</td>
+        <td class="border-black border px-2">{{ item.city.name }}</td>
+        <td class="border-black border px-2">{{ item.pincode }}</td>
+        <td class="border-black border px-2">{{ item.description }}</td>
         <td>
-          <button @click="editItem(index)">Edit</button>
-          <button @click="deleteItem(index)">Delete</button>
+          <div>
+            <button
+              @click="editItem(index)"
+              class="rounded-sm ml-1 bg-gray-600 text-white px-4 py-2 my-2 font-bold"
+            >
+              Edit
+            </button>
+            <button
+              @click="deleteItem(index)"
+              class="rounded-sm ml-1 bg-gray-600 text-white px-4 py-2 my-2 font-bold"
+            >
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
