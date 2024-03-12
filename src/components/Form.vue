@@ -1,40 +1,58 @@
 <template>
-  <h1 class="font-bold py-3 text-xl underline">Details</h1>
+  <h1
+    class="font-bold py-3 text-2xl text-white bg-slate-500 w-2/5 ml-7 mt-7 px-10 rounded-t-3xl"
+  >
+    User Details
+  </h1>
   <Form
     @submit="handleSubmit"
     v-slot="{ errors }"
-    class="flex flex-col justify-center"
+    class="flex flex-col justify-center rounded-b-3xl shadow-xl w-2/5 pb-10 px-10 mx-7 mb-7 border-t-2"
   >
     <!-- Name -->
-    <div>
-      <label class="font-bold" for="">Name: </label>
-      <Field
-        name="Name"
-        v-model="name"
-        placeholder="Enter Name"
-        rules="required"
-        class="border border-black px-2 my-2"
-      />
+    <div class="mt-2">
+      <label class="font-medium text-gray-600 text-xl" for="">Name: </label>
+      <ErrorMessage name="Name" class="text-red-600" />
     </div>
-    <ErrorMessage name="Name" class="text-red-600 pl-14" />
+    <Field
+      name="Name"
+      v-model="name"
+      rules="required"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+    />
 
     <!-- Email -->
     <div>
-      <label class="font-bold" for="">Email: </label>
-      <Field
-        name="Email"
-        v-model="email"
-        type="email"
-        placeholder="Enter Email"
-        :rules="validateEmail"
-        class="border border-black px-2 my-2"
-      />
+      <label class="font-medium text-gray-600 text-xl" for="">Email: </label>
+      <ErrorMessage class="text-red-600" name="Email" />
     </div>
-    <ErrorMessage class="text-red-600 pl-14" name="Email" />
+    <Field
+      name="Email"
+      v-model="email"
+      type="email"
+      :rules="validateEmail"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+    />
+
+    <!-- Mobile Number -->
+    <div>
+      <label class="font-medium text-gray-600 text-xl" for="">Mobile: </label>
+      <ErrorMessage class="text-red-600 w-full" name="Mobile" />
+    </div>
+    <Field
+      v-model="mobile"
+      type="tel"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+      :rules="validateMobile"
+      name="Mobile"
+    />
 
     <!-- Gender -->
+    <div>
+      <label class="font-medium text-gray-600 text-xl" for="">Gender: </label>
+      <ErrorMessage class="text-red-600" name="Gender" />
+    </div>
     <div class="my-2">
-      <label class="font-bold" for="">Gender: </label>
       <Field
         v-model="gender"
         name="Gender"
@@ -42,7 +60,7 @@
         value="Male"
         rules="required"
       />
-      Male
+      <span class="font-normal text-gray-600 text-lg pl-2">Male</span>
 
       <Field
         v-model="gender"
@@ -50,112 +68,94 @@
         type="radio"
         value="Female"
         rules="required"
+        class="ml-2"
       />
-      Female
+      <span class="font-normal text-gray-600 text-lg pl-2">Female</span>
     </div>
-    <ErrorMessage class="text-red-600 pl-14" name="Gender" />
-
-    <!-- Mobile Number -->
-    <div>
-      <label class="font-bold" for="">Mobile: </label>
-      <Field
-        v-model="mobile"
-        type="tel"
-        class="border border-black my-2 px-2"
-        placeholder="Enter Mobile"
-        :rules="validateMobile"
-        name="Mobile"
-      />
-    </div>
-    <ErrorMessage class="text-red-600 pl-14" name="Mobile" />
 
     <!-- Country -->
     <div>
-      <label class="font-bold">Country: </label>
-      <Field
-        name="Country"
-        as="select"
-        v-model="selectedCountry"
-        @change="handleStateChange"
-        class="border border-black px-2 my-2"
-        rules="required"
-      >
-        <option value="" disabled>Select Country</option>
-        <option v-for="country in countries" :key="country" :value="country">
-          {{ country }}
-        </option>
-      </Field>
+      <label class="font-medium text-gray-600 text-xl">Country: </label>
+      <ErrorMessage class="text-red-600" name="Country" />
     </div>
-    <ErrorMessage class="text-red-600 pl-14" name="Country" />
+    <Field
+      name="Country"
+      as="select"
+      v-model="selectedCountry"
+      @change="handleStateChange"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none font-normal text-gray-600 text-lg"
+      rules="required"
+    >
+      <option value="" disabled>Select Country</option>
+      <option v-for="country in countries" :key="country" :value="country">
+        {{ country }}
+      </option>
+    </Field>
 
     <!-- State -->
     <div>
-      <label class="font-bold" for="">State: </label>
-      <Field
-        name="State"
-        as="select"
-        v-model="selectedState"
-        @change="getCities"
-        class="border border-black px-2 my-2"
-        rules="required"
-      >
-        <option value="" disabled>Select State</option>
-        <option
-          v-for="(state, i) in states.states"
-          :key="i"
-          :value="state.name"
-        >
-          {{ state.name }}
-        </option>
-      </Field>
+      <label class="font-medium text-gray-600 text-xl" for="">State: </label>
+      <ErrorMessage class="text-red-600" name="State" />
     </div>
-    <ErrorMessage class="text-red-600 pl-14" name="State" />
+    <Field
+      name="State"
+      as="select"
+      v-model="selectedState"
+      @change="getCities"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none font-normal text-gray-600 text-lg"
+      rules="required"
+    >
+      <option value="" disabled>Select State</option>
+      <option v-for="(state, i) in states.states" :key="i" :value="state.name">
+        {{ state.name }}
+      </option>
+    </Field>
 
     <!-- City -->
     <div>
-      <label class="font-bold" for="">City: </label>
-      <Field
-        name="City"
-        as="select"
-        v-model="selectedCity"
-        class="border border-black px-2 my-2"
-        rules="required"
-      >
-        <option value="" disabled>Select City</option>
-        <option v-for="(city, i) in cities.cities" :key="i" :value="city">
-          {{ city.name }}
-        </option>
-      </Field>
+      <label class="font-medium text-gray-600 text-xl" for="">City: </label>
+      <ErrorMessage class="text-red-600" name="City" />
     </div>
-    <ErrorMessage class="text-red-600 pl-14" name="City" />
+    <Field
+      name="City"
+      as="select"
+      v-model="selectedCity"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none font-normal text-gray-600 text-lg"
+      rules="required"
+    >
+      <option value="" disabled>Select City</option>
+      <option v-for="(city, i) in cities.cities" :key="i" :value="city">
+        {{ city.name }}
+      </option>
+    </Field>
 
     <!-- Pincode -->
     <div>
-      <label class="font-bold" for="">Pincode: </label>
-      <Field
-        v-model="pincode"
-        type="number"
-        placeholder="Pincode"
-        name="pincode"
-        class="border border-black px-2 my-2"
-        :rules="{ pincode: true }"
-      />
+      <label class="font-medium text-gray-600 text-xl" for="">Pincode: </label>
+      <ErrorMessage class="text-red-600" name="pincode" />
     </div>
-    <ErrorMessage class="text-red-600 pl-14" name="pincode" />
+    <Field
+      v-model="pincode"
+      type="number"
+      name="pincode"
+      class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+      :rules="{ pincode: true }"
+    />
 
     <!-- Description -->
     <div>
-      <label class="font-bold" for="">Description: </label>
+      <label class="font-medium text-gray-600 text-xl" for=""
+        >Description:
+      </label>
       <textarea
         v-model="description"
-        placeholder="Description"
-        class="border border-black px-2"
+        class="px-2 py-2 my-2 w-full bg-slate-200 focus:outline-none"
       ></textarea>
     </div>
 
     <button
       type="submit"
-      class="w-60 rounded-sm ml-1 bg-gray-600 text-white px-4 py-2 my-3 font-bold"
+      class="w-full rounded-sm bg-blue-950 text-white py-3 mt-3 font-bold text-lg"
     >
       Submit
     </button>
