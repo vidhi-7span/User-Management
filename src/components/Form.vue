@@ -80,7 +80,7 @@
         class="border border-black px-2 my-2"
         rules="required"
       >
-        <option value="">Select Country</option>
+        <option value="" disabled>Select Country</option>
         <option v-for="country in countries" :key="country" :value="country">
           {{ country }}
         </option>
@@ -99,7 +99,7 @@
         class="border border-black px-2 my-2"
         rules="required"
       >
-        <option value="">Select State</option>
+        <option value="" disabled>Select State</option>
         <option
           v-for="(state, i) in states.states"
           :key="i"
@@ -117,11 +117,11 @@
       <Field
         name="City"
         as="select"
-        v-model="selectedCity.name"
+        v-model="selectedCity"
         class="border border-black px-2 my-2"
         rules="required"
       >
-        <option value="">Select City</option>
+        <option value="" disabled>Select City</option>
         <option v-for="(city, i) in cities.cities" :key="i" :value="city">
           {{ city.name }}
         </option>
@@ -142,7 +142,6 @@
       />
     </div>
     <ErrorMessage class="text-red-600 pl-14" name="pincode" />
-    <!-- <span class="text-red-600 pl-14">{{ errors.pincode }}</span> -->
 
     <!-- Description -->
     <div>
@@ -337,15 +336,15 @@ const validateMobile = (value) => {
   return true;
 };
 
-const resetForm = () => {
-  name.value = "";
-  email.value = "";
-  gender.value = "";
-  mobile.value = "";
-  selectedCountry.value = "";
-  selectedState.value = "";
-  selectedCity.value = "";
-  pincode.value = "";
-  description.value = "";
-};
+// const resetForm = () => {
+//   name.value = "";
+//   email.value = "";
+//   gender.value = "";
+//   mobile.value = "";
+//   selectedCountry.value = "";
+//   selectedState.value = "";
+//   selectedCity.value = "";
+//   pincode.value = "";
+//   description.value = "";
+// };
 </script>

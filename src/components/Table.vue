@@ -19,7 +19,7 @@
         <td>{{ item.mobile }}</td>
         <td>{{ item.country }}</td>
         <td>{{ item.state }}</td>
-        <td>{{ item.city }}</td>
+        <td>{{ item.city.name }}</td>
         <td>{{ item.pincode }}</td>
         <td>{{ item.description }}</td>
         <td>
