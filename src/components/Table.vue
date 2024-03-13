@@ -1,9 +1,37 @@
 <template>
+  <div class="flex my-3">
+    <button class="rounded-xl bg-blue-950 text-white p-2 font-bold text-md">
+      <IconAdd @click="isOpen = true" />
+    </button>
+    <button
+      @click="searchClick()"
+      class="rounded-xl bg-blue-950 text-white p-2 font-bold text-md ml-3"
+    >
+      <IconSearch />
+    </button>
+
+    <!-- Modal -->
+    <div class="root">
+      <teleport to="body" style="background-color: red">
+        <div class="modal overflow-y-scroll" v-if="isOpen">
+          <div class="flec justify-end items-end">
+            <button
+              class="rounded-xl bg-blue-950 text-white p-2 font-bold text-md text-end m-4"
+            >
+              <IconClose @click="isOpen = false" />
+            </button>
+          </div>
+          <Form />
+        </div>
+      </teleport>
+    </div>
+  </div>
+
   <table class="mb-7 w-full">
     <thead>
       <tr>
         <th
-          class="border-slate-400 border-2 px-4 py-2 font-bold text-white bg-slate-500 text-lg"
+          class="border-slate-400 border-2 px-4 py-2 font-semibold text-white bg-slate-600 text-xl"
           v-for="(item, i) in tableHead"
           :key="i"
         >
@@ -18,63 +46,63 @@
         class="border-black border px-2 py-0 text-center"
       >
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.name }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.email }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.gender }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.mobile }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.country }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.state }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.city }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.pincode }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           {{ item.description }}
         </td>
         <td
-          class="border-slate-200 border-2 px-2 py-0 font-medium text-gray-600 text-md"
+          class="bg-slate-200 border-slate-400 border-2 px-2 py-0 font-medium text-gray-600 text-md"
         >
           <div>
             <button
               @click="editItem(index)"
-              class="rounded-full bg-blue-950 text-white p-2 my-1 font-bold text-md"
+              class="rounded-xl bg-blue-950 text-white p-2 my-1 font-bold text-md"
             >
-              <EditIcon />
+              <IconEdit />
             </button>
             <button
               @click="deleteItem(index)"
-              class="rounded-full bg-blue-950 text-white p-2 ml-2 my-1 font-bold text-md"
+              class="rounded-xl bg-blue-950 text-white p-2 ml-2 my-1 font-bold text-md"
             >
               <IconDelete />
             </button>
@@ -86,11 +114,12 @@
 </template>
 
 <script setup>
-import { watch } from "vue";
+import { watch, ref } from "vue";
 import { useLocationStore } from "../store";
-
+import IconSearch from "./icons/IconSearch.vue";
+import Form from "@/components/Form.vue";
 const store = useLocationStore();
-
+const isOpen = ref(false);
 const tableHead = [
   "Name",
   "Email",
@@ -115,5 +144,21 @@ const deleteItem = (index) => {
 
 const editItem = (index) => {
   const item = items.value[index];
+  console.log(">>>", item);
 };
 </script>
+
+<style>
+.root {
+  position: relative;
+}
+.modal {
+  position: absolute;
+  top: 75px;
+  left: 85px;
+  height: 85%;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.29);
+}
+</style>

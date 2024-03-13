@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items-center">
     <h1
-      class="font-bold py-3 text-2xl text-white bg-slate-500 w-2/5 mt-7 px-10 rounded-t-3xl"
+      class="font-bold py-3 text-2xl text-white bg-slate-600 w-2/5 mt-7 px-10 rounded-t-3xl"
     >
       User Details
     </h1>
@@ -162,6 +162,7 @@
       </div>
 
       <button
+        @click="dataSubmitted()"
         type="submit"
         class="w-full rounded-sm bg-blue-950 text-white py-3 mt-3 font-bold text-lg"
       >
@@ -177,15 +178,15 @@ import { useLocationStore } from "../store";
 
 const store = useLocationStore();
 
-const name = ref("Vidhi Suthar");
+const name = ref("Vidhi");
 const email = ref("vidhi@gmail.com");
-const gender = ref("fe");
+const gender = ref("Female");
 const mobile = ref("1234567890");
 const selectedCountry = ref("India");
 const selectedState = ref("Gujarat");
 const selectedCity = ref("Ahmedabad");
 const pincode = ref("123456");
-const description = ref("asdfghjkl");
+const description = ref("Lorem ipsum");
 
 // Define refs for dynamic dropdown options
 const countries = ref([]);
@@ -216,8 +217,11 @@ const getCities = () => {
   );
 };
 
+const dataSubmitted = () => {
+  alert("Data added successfully");
+};
+
 const handleSubmit = (data, { resetForm }) => {
-  console.log("selectedCity", selectedCity.value);
   const isValid = true;
   if (isValid) {
     const data = {
