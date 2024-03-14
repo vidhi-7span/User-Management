@@ -6,11 +6,12 @@
     >
       <IconAdd @click="isOpen = true" />
     </button>
+    <!-- Search Input -->
     <div class="relative ml-3">
       <input
-        type="text"
         v-model="searchQuery"
         @keyup.enter="search"
+        type="text"
         class="border rounded-md px-3 py-4 mr-14 bg-slate-200 focus:outline-none w-full"
         placeholder="Search by Name or Email"
       />
@@ -18,7 +19,7 @@
         @click="search"
         class="absolute right-0 top-0 bottom-0 px-3 py-1 bg-blue-950 text-white rounded-r-md"
       >
-        <IconSearch />
+        Search
       </button>
     </div>
 
@@ -59,19 +60,21 @@
       </teleport>
     </div>
   </div>
-
+  <!-- Table -->
   <table class="mb-7 w-full">
+    <!-- Table Header -->
     <thead>
       <tr>
         <th
-          class="border-slate-400 border-2 px-4 py-2 font-semibold text-white bg-slate-600 text-xl"
           v-for="(item, i) in tableHead"
           :key="i"
+          class="border-slate-400 border-2 px-4 py-2 font-semibold text-white bg-slate-600 text-xl"
         >
           {{ item }}
         </th>
       </tr>
     </thead>
+
     <tbody>
       <tr
         v-for="(item, index) in items"
@@ -154,6 +157,7 @@ import Form from "@/components/Form.vue";
 const store = useLocationStore();
 const isOpen = ref(false);
 const selectedItem = ref(null);
+const searchQuery = ref("");
 const tableHead = [
   "Name",
   "Email",
@@ -171,6 +175,30 @@ watch(
   () => store.getTableDetails,
   (data) => {}
 );
+
+// Watch for changes in searchQuery
+watch(searchQuery, (newValue, oldValue) => {
+  filterItems(newValue);
+});
+
+// Function to filter items based on search query
+const filterItems = (query) => {
+  if (!query) {
+    items.value = store.getTableDetails;
+    return;
+  }
+  const filtered = store.getTableDetails.filter(
+    (item) =>
+      item.name.toLowerCase().includes(query.toLowerCase()) ||
+      item.email.toLowerCase().includes(query.toLowerCase())
+  );
+  items.value = filtered;
+};
+
+// Search function triggered by button click
+const search = () => {
+  filterItems(searchQuery.value);
+};
 
 // Delete
 const deleteItem = (index) => {
