@@ -1,15 +1,8 @@
 <template>
   <div class="flex justify-center items-center">
-    <h1
-      class="font-bold py-3 text-2xl text-white bg-slate-600 w-2/5 mt-7 px-10 rounded-t-3xl"
-    >
-      User Details
-    </h1>
-  </div>
-  <div class="flex justify-center items-center">
     <Form
       @submit="handleSubmit"
-      class="flex flex-col rounded-b-3xl shadow-xl w-2/5 pb-10 px-10 mx-7 mb-7 border-t-2"
+      class="flex flex-col rounded-b-3xl w-full pb-10 px-8 mb-1 overflow-y-auto"
     >
       <!-- Name -->
       <div class="mt-2">
@@ -218,7 +211,7 @@ const getCities = () => {
 };
 
 const dataSubmitted = () => {
-  alert("Data added successfully");
+  alert("Data successfully added");
 };
 
 const handleSubmit = (data, { resetForm }) => {
