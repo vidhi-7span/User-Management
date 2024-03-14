@@ -1,7 +1,8 @@
+<!-- Table.vue -->
 <template>
   <div class="flex my-3">
     <button
-      class="rounded-xl bg-blue-950 text-white py-1 px-3 font-bold text-md"
+      class="rounded-md bg-blue-950 text-white py-1 px-3 font-bold text-md"
     >
       <IconAdd @click="isOpen = true" />
     </button>
@@ -127,6 +128,7 @@
         >
           <div class="flex justify-center gap-2">
             <button
+              v-if="items.length > 0"
               @click="editItem(index)"
               class="rounded-xl bg-blue-950 text-white p-2 my-1 font-bold text-md"
             >
@@ -151,6 +153,7 @@ import { useLocationStore } from "../store";
 import Form from "@/components/Form.vue";
 const store = useLocationStore();
 const isOpen = ref(false);
+const selectedItem = ref(null);
 const tableHead = [
   "Name",
   "Email",
@@ -164,47 +167,20 @@ const tableHead = [
   "Actions",
 ];
 const items = store.getTableDetails;
-const searchQuery = ref("");
-const filteredItems = ref([]);
 watch(
   () => store.getTableDetails,
   (data) => {}
 );
-// Watch for changes in the store data
-watch(
-  () => store.getTableDetails,
-  (data) => {
-    filteredItems.value = data;
-  }
-);
-// Watch for changes in the search query
-watch(searchQuery, (newVal, oldVal) => {
-  if (newVal !== oldVal) {
-    search();
-  }
-});
 
+// Delete
 const deleteItem = (index) => {
   store.deleteData(index);
 };
 
+// Edit
 const editItem = (index) => {
-  const item = items.value[index];
-  console.log(">>>", item);
-};
-
-// Search functionality
-const search = () => {
-  const query = searchQuery.value.trim().toLowerCase();
-  if (!query) {
-    filteredItems.value = store.getTableDetails;
-  } else {
-    filteredItems.value = store.getTableDetails.filter(
-      (item) =>
-        item.name.toLowerCase().includes(query) ||
-        item.email.toLowerCase().includes(query)
-    );
-  }
+  selectedItem.value = items.value[index];
+  isOpen.value = true;
 };
 
 // close modale when clicking outside the modal
@@ -219,39 +195,3 @@ const closeModalOnClickOutside = (event) => {
 };
 document.addEventListener("click", closeModalOnClickOutside);
 </script>
-
-<style>
-/* .root {
-  position: relative;
-} */
-/* .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-} */
-
-/* .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  z-index: 998;
-} */
-
-/* .modal-content {
-  width: 500px; 
-  background-color: white;
-  border-radius: 0.5rem;
-  overflow: hidden;
-} */
-
-/* .modal-body {
-  max-height: calc(80vh - 100px);
-  overflow-y: auto;
-} */
-</style>

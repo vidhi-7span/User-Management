@@ -1,3 +1,4 @@
+<!-- Form.vue -->
 <template>
   <div class="flex justify-center items-center">
     <Form
@@ -185,6 +186,26 @@ const description = ref("Lorem ipsum");
 const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
+
+// Define a prop to receive the selected item data
+const selectedItemData = ref(null);
+
+// Populate form fields with selected item data
+onMounted(() => {
+  // Check if there's a selected item data
+  if (selectedItemData.value) {
+    // Assign selected item data to form fields
+    name.value = selectedItemData.value.name;
+    email.value = selectedItemData.value.email;
+    gender.value = selectedItemData.value.gender;
+    mobile.value = selectedItemData.value.mobile;
+    country.value = selectedItemData.value.country;
+    state.value = selectedItemData.value.state;
+    city.value = selectedItemData.value.city;
+    pincode.value = selectedItemData.value.pincode;
+    description.value = selectedItemData.value.description;
+  }
+});
 
 // Fetch countries data
 onMounted(async () => {
