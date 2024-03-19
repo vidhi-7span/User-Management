@@ -1,25 +1,17 @@
 <!-- Form.vue -->
 <template>
   <div class="flex justify-center items-center">
-    <Form
-      @submit="handleSubmit"
-      class="flex flex-col rounded-b-3xl w-full pb-10 px-8 mb-1 overflow-y-auto"
-    >
+    <Form @submit="handleSubmit" class="submitForm">
       <!-- Name -->
       <div class="mt-2">
-        <label class="font-medium text-gray-600 text-xl" for="">Name: </label>
+        <label class="formLabel" for="">Name: </label>
         <ErrorMessage name="Name" class="text-red-600" />
       </div>
-      <Field
-        name="Name"
-        v-model="name"
-        rules="required"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
-      />
+      <Field name="Name" v-model="name" rules="required" class="inputField" />
 
       <!-- Email -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for="">Email: </label>
+        <label class="formLabel" for="">Email: </label>
         <ErrorMessage class="text-red-600" name="Email" />
       </div>
       <Field
@@ -27,25 +19,25 @@
         v-model="email"
         type="email"
         :rules="validateEmail"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+        class="inputField"
       />
 
       <!-- Mobile Number -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for="">Mobile: </label>
+        <label class="formLabel" for="">Mobile: </label>
         <ErrorMessage class="text-red-600 w-full" name="Mobile" />
       </div>
       <Field
         v-model="mobile"
         type="tel"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+        class="inputField"
         :rules="validateMobile"
         name="Mobile"
       />
 
       <!-- Gender -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for="">Gender: </label>
+        <label class="formLabel" for="">Gender: </label>
         <ErrorMessage class="text-red-600" name="Gender" />
       </div>
       <div class="my-2">
@@ -56,7 +48,7 @@
           value="Male"
           rules="required"
         />
-        <span class="font-normal text-gray-600 text-lg pl-2">Male</span>
+        <span class="genderLabel">Male</span>
 
         <Field
           v-model="gender"
@@ -66,12 +58,12 @@
           rules="required"
           class="ml-2"
         />
-        <span class="font-normal text-gray-600 text-lg pl-2">Female</span>
+        <span class="genderLabel">Female</span>
       </div>
 
       <!-- Country -->
       <div>
-        <label class="font-medium text-gray-600 text-xl">Country: </label>
+        <label class="formLabel">Country: </label>
         <ErrorMessage class="text-red-600" name="Country" />
       </div>
       <Field
@@ -79,7 +71,7 @@
         as="select"
         v-model="selectedCountry"
         @change="getState"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none font-normal text-gray-600 text-lg"
+        class="dropDown"
         rules="required"
       >
         <option value="" disabled>Select Country</option>
@@ -90,7 +82,7 @@
 
       <!-- State -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for="">State: </label>
+        <label class="formLabel" for="">State: </label>
         <ErrorMessage class="text-red-600" name="State" />
       </div>
       <Field
@@ -98,70 +90,52 @@
         as="select"
         v-model="selectedState"
         @change="getCities"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none font-normal text-gray-600 text-lg"
+        class="dropDown"
         rules="required"
       >
         <option value="" disabled>Select State</option>
-        <option
-          v-for="(state, i) in states.states"
-          :key="i"
-          :value="state.name"
-        >
+        <option v-for="(state, i) in states" :key="i" :value="state.name">
           {{ state.name }}
         </option>
       </Field>
 
       <!-- City -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for="">City: </label>
+        <label class="formLabel" for="">City: </label>
         <ErrorMessage class="text-red-600" name="City" />
       </div>
       <Field
         name="City"
         as="select"
         v-model="selectedCity"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none font-normal text-gray-600 text-lg"
+        class="dropDown"
         rules="required"
       >
         <option value="" disabled>Select City</option>
-        <option v-for="(city, i) in cities.cities" :key="i" :value="city.name">
+        <option v-for="(city, i) in cities" :key="i" :value="city.name">
           {{ city.name }}
         </option>
       </Field>
 
       <!-- Pincode -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for=""
-          >Pincode:
-        </label>
+        <label class="formLabel" for="">Pincode: </label>
         <ErrorMessage class="text-red-600" name="pincode" />
       </div>
       <Field
         v-model="pincode"
         type="number"
         name="pincode"
-        class="border my-2 py-2 px-2 bg-slate-200 focus:outline-none"
+        class="inputField"
         :rules="{ pincode: true }"
       />
 
       <!-- Description -->
       <div>
-        <label class="font-medium text-gray-600 text-xl" for=""
-          >Description:
-        </label>
-        <textarea
-          v-model="description"
-          class="px-2 py-2 my-2 w-full bg-slate-200 focus:outline-none"
-        ></textarea>
+        <label class="formLabel" for="">Description: </label>
+        <textarea v-model="description" class="formDesc"></textarea>
       </div>
-
-      <button
-        @click="dataSubmitted()"
-        type="submit"
-        class="w-full rounded-sm bg-blue-950 text-white py-3 mt-3 font-bold text-lg"
-      >
-        Submit
-      </button>
+      <button type="submit" @click="success" class="btnSubmit">Submit</button>
     </Form>
   </div>
 </template>
@@ -169,76 +143,69 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useLocationStore } from "../store";
-
+import { useToast } from "vue-toastification";
+const toast = useToast();
 const store = useLocationStore();
+const emit = defineEmits(["data-submitted"]);
+const { item } = defineProps(["item"]);
 
 const name = ref("Vidhi");
-const email = ref("vidhi@gmail.com");
+const email = ref("vidhi@7span.com");
 const gender = ref("Female");
-const mobile = ref("1234567890");
-const selectedCountry = ref("India");
-const selectedState = ref("Gujarat");
-const selectedCity = ref("Ahmedabad");
-const pincode = ref("123456");
-const description = ref("Lorem ipsum");
+const mobile = ref("9408708580");
+const selectedCountry = ref("");
+const selectedState = ref("");
+const selectedCity = ref("");
+const pincode = ref("");
+const description = ref("");
 
-// Define refs for dynamic dropdown options
+// Store Dropdown Details
 const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
 
-// Define a prop to receive the selected item data
-const selectedItemData = ref(null);
-
-// Populate form fields with selected item data
-onMounted(() => {
-  // Check if there's a selected item data
-  if (selectedItemData.value) {
-    // Assign selected item data to form fields
-    name.value = selectedItemData.value.name;
-    email.value = selectedItemData.value.email;
-    gender.value = selectedItemData.value.gender;
-    mobile.value = selectedItemData.value.mobile;
-    country.value = selectedItemData.value.country;
-    state.value = selectedItemData.value.state;
-    city.value = selectedItemData.value.city;
-    pincode.value = selectedItemData.value.pincode;
-    description.value = selectedItemData.value.description;
-  }
-});
-
-// Fetch countries data
 onMounted(async () => {
   try {
     await store.fetchLocations();
     countries.value = store.counties.map((county) => county.name);
+    if (item) {
+      name.value = item.name;
+      email.value = item.email;
+      gender.value = item.gender;
+      mobile.value = item.mobile;
+      selectedCountry.value = item.country;
+      getState();
+      selectedState.value = item.state;
+      getCities();
+      selectedCity.value = item.city;
+      pincode.value = item.pincode;
+      description.value = item.description;
+    }
   } catch (error) {
     console.error("Error fetching locations:", error);
   }
 });
 
-//  Get State based on Country
+// Get State
 const getState = () => {
-  states.value = store.counties.find(
+  const tempCounties = store.counties.find(
     (county) => county.name == selectedCountry.value
   );
+  states.value = tempCounties.states;
 };
 
-// Get Cities based on State
+// Get Cities
 const getCities = () => {
-  cities.value = states.value.states.find(
+  const tempStates = states.value.find(
     (state) => state.name == selectedState.value
   );
+  cities.value = tempStates.cities;
 };
 
-const dataSubmitted = () => {
-  alert("Data successfully added");
-};
-
-const handleSubmit = (data, { resetForm }) => {
+const handleSubmit = (newData, { resetForm }) => {
   const isValid = true;
   if (isValid) {
-    const data = {
+    const newData = {
       name: name.value,
       email: email.value,
       gender: gender.value,
@@ -249,8 +216,19 @@ const handleSubmit = (data, { resetForm }) => {
       pincode: pincode.value,
       description: description.value,
     };
-    store.addData(data);
+
+    if (item) {
+      const index = store.data.findIndex((entry) => entry.id === item.id);
+      if (index !== -1) {
+        store.data[index] = newData;
+      }
+    } else {
+      store.addData(newData);
+      toast.error("Data added Successfully! 🎉");
+    }
+
     resetForm();
+    emit("data-submitted");
   }
 };
 
