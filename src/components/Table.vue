@@ -100,7 +100,9 @@
 <script setup>
 import { watch, ref, computed } from "vue";
 import { useLocationStore } from "../store";
+import { useToast } from "vue-toastification";
 import Form from "@/components/Form.vue";
+const toast = useToast();
 const store = useLocationStore();
 const isOpen = ref(false);
 const selectedItem = ref(null);
@@ -117,9 +119,6 @@ const tableHead = [
   "Description",
   "Actions",
 ];
-
-// const items = store.getTableDetails;
-
 watch(
   () => store.getTableDetails,
   (data) => {}
@@ -143,6 +142,7 @@ const items = computed(() => {
 // Delete
 const deleteItem = (index) => {
   store.deleteData(index);
+  toast.success("Record Delete Successfully! 🎉");
 };
 
 // Edit

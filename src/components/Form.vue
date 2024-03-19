@@ -156,8 +156,8 @@ const mobile = ref("9408708580");
 const selectedCountry = ref("");
 const selectedState = ref("");
 const selectedCity = ref("");
-const pincode = ref("");
-const description = ref("");
+const pincode = ref("382482");
+const description = ref("Hey there!");
 
 // Store Dropdown Details
 const countries = ref([]);
@@ -222,9 +222,10 @@ const handleSubmit = (newData, { resetForm }) => {
       if (index !== -1) {
         store.data[index] = newData;
       }
+      toast.success("Record Update Successfully! 🎉");
     } else {
       store.addData(newData);
-      toast.error("Data added Successfully! 🎉");
+      toast.success("Record added Successfully! 🎉");
     }
 
     resetForm();
